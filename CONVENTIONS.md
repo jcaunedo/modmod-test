@@ -1,7 +1,7 @@
 <!--
 Created: Nov 9, 2026
 Created by: Julio Caunedo
-Last updated: Nov 18, 2026
+Last updated: Nov 19, 2026
 Scope: how this repo's work is branched, committed, versioned, tagged and traced, and how docs under `prds/` are written.
 Purpose: keep the team's workflow and writing rules in the repo, so they're the same on every machine and for every person or assistant.
 -->
@@ -24,11 +24,10 @@ One branch per unit of work, named by type:
 
 ## Commits
 
-Format: `type(scope): summary [ID…]`
+Format: `type(scope): summary`
 
 - `type` is one of the branch prefixes above (`feat`, `fix`, `chore`, `design`, `docs`), plus `ci` for CI config.
 - `scope` is the area touched: a component (`button`), a layout or flow, `theme`, `motion`, `prds`, `repo`…
-- `[ID…]` cites the requirement or ticket IDs the change serves (see "IDs"). Leave it out when the work has none.
 
 Examples:
 
@@ -38,10 +37,10 @@ Examples:
 
 ## IDs
 
-⚠️ **Set at setup:** where the project tracks its work (Jira, Linear, a requirements spec…), the ID prefixes it uses, and whether PRDs here mint their own IDs. `ucl-setup` asks and fills this section.
+ModAuto has no work tracker, so commits cite no IDs and the commit format has no `[ID…]` part.
 
-- **Referenced here, never minted here:** IDs whose source of record is outside the repo (tickets, requirements, decisions). ⚠️ Not set.
-- **Minted here:** repo-local PRD IDs (e.g. `SIGN-` and `SIGN-AC-` for a sign-in PRD and its acceptance criteria). Pick prefixes that never collide with an outside prefix, and list each one here when its PRD is created. ⚠️ None yet.
+- **Referenced here, never minted here:** IDs whose source of record is outside the repo (tickets, requirements, decisions). None. If the team starts using a tracker (Jira, Linear, a requirements spec…), name it and its ID prefixes here, and add `[ID…]` to the end of the commit format.
+- **Minted here:** repo-local PRD IDs (e.g. `SIGN-` and `SIGN-AC-` for a sign-in PRD and its acceptance criteria). None yet. If a PRD needs its own IDs, list each prefix here when the PRD is created.
 
 ## Versioning
 

@@ -1,7 +1,7 @@
 <!--
 Created: Nov 9, 2026
 Created by: Julio Caunedo
-Last updated: Nov 9, 2026
+Last updated: Nov 19, 2026
 Scope: the `size` prop and heights of interactive controls in UCL (buttons, and future inputs, selects, toggles, button groups, segmented controls).
 Purpose: keep control heights aligned across components, with the base component library and with Figma, under one set of size names.
 -->
@@ -10,7 +10,9 @@ Purpose: keep control heights aligned across components, with the base component
 
 Controls that sit in the same row (a form, a toolbar, a filter bar) share one set of heights, so a Button next to an Input lines up without either one being adjusted.
 
-⚠️ **Set at setup:** these are the template defaults: shadcn/ui's heights and names. `ucl-setup` confirms the heights against the project's Figma file and picks the names (keep shadcn's, or use the names the Figma file uses, e.g. `xs`–`lg` with `md` as the default). Until then, this file describes what the code ships today.
+ModAuto keeps shadcn/ui's size names and heights, as chosen at setup.
+
+⚠️ **Decision needed:** the heights haven't been checked against Figma, because the design system file doesn't exist yet (CLAUDE.md → "Figma"). When it does, compare its Button and Input sizes with this table and fix any height it draws differently.
 
 ## Scale
 
@@ -23,7 +25,7 @@ Controls that sit in the same row (a form, a toolbar, a filter bar) share one se
 
 Use the default unless a density requirement forces otherwise. Don't mix sizes within one row or toolbar.
 
-ℹ️ The heights are shadcn/ui's, value for value, so pasted shadcn code lines up. If setup renames the steps, keep the old shadcn names (`default`, `icon`) as deprecated aliases so pasted code still works, and say so here.
+ℹ️ The names and heights are shadcn/ui's, value for value, so pasted shadcn code lines up. If the steps are ever renamed, keep the old shadcn names (`default`, `icon`) as deprecated aliases so pasted code still works, and say so here.
 
 ℹ️ A step Figma draws that isn't on this scale (e.g. 28 px, or 48 px for a main action on phones) needs a decision before it's built: add it to the scale here, or snap the design to the nearest step.
 

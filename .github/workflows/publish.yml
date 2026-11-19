@@ -2,10 +2,11 @@ name: Publish package
 
 # Publishes only when the version in package.json changes on main.
 # Normal merges release nothing; a release is `npm run release:*` + push.
-# Never publishes while package.json has "private": true (the unconfigured
-# template) or on a first commit with no previous version to compare.
-# Registry: GitHub Packages by default. `ucl-setup` updates registry-url and
-# the package scope for the project.
+# Never publishes while package.json has "private": true or on a first commit
+# with no previous version to compare.
+# Registry: GitHub Packages, scope @jcaunedo. GITHUB_TOKEN can only publish to
+# the account that owns this repo, so the scope must match the repo's owner
+# (CLAUDE.md -> "Project").
 
 on:
   push:
@@ -31,7 +32,7 @@ jobs:
           PREVIOUS=$(git show HEAD~1:package.json 2>/dev/null | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).version" 2>/dev/null || echo "")
           if [ "$PRIVATE" = "true" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "package.json is private (unconfigured template); not publishing. Run ucl-setup first."
+            echo "package.json is private; not publishing."
           elif [ -z "$PREVIOUS" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No previous package.json (first commit); not publishing. Release with npm run release:*."
@@ -72,6 +73,9 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The repo's .npmrc reads the token from NPM_TOKEN, and it wins over
+          # the .npmrc setup-node writes.
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Summary
         run: echo "Published $(node -p "require('./package.json').name")@${{ needs.check-version.outputs.new_version }}" >> "$GITHUB_STEP_SUMMARY"

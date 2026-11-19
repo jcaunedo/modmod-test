@@ -23,13 +23,19 @@ Each entry says what the rule is, why it exists, and how to apply it. Don't rest
 
 ## Brand names
 
-⚠️ **Decision needed:** set by `ucl-setup`. Define how each product or brand name is written (capitalization, spacing), the forms that are never correct, and which names must never be used interchangeably. Identifiers that aren't user-facing (the npm package, CSS/JS names) keep their lowercase forms.
+| Name    | Written as | Never                              |
+| ------- | ---------- | ---------------------------------- |
+| ModAuto | `ModAuto`  | `Modauto`, `Mod Auto`, `MODAUTO`, `modauto` in UI copy |
+
+Identifiers that aren't user-facing (the npm package `@jcaunedo/ucl`, the `modauto` layouts folder, CSS/JS names) keep their lowercase forms.
+
+⚠️ **Decision needed:** only the project name is set, as given at setup. Still to define: the other product or brand names (the company name included), the forms that are never correct for each, and which names must never be used interchangeably.
 
 ---
 
 ## Brand voice
 
-⚠️ **Decision needed:** not defined yet. The `project-copywriter` skill reads this section. Until it's filled in, the skill falls back to general rules and says which assumptions it made. Define:
+⚠️ **Decision needed:** not defined yet. The `modauto-copywriter` skill reads this section. Until it's filled in, the skill falls back to general rules and says which assumptions it made. Define:
 
 - **Audiences:** who reads the UI (e.g. builders creating apps, team admins, internal operators), and the tone for each.
 - **Voice:** three to five words for how the product sounds, plus what it never sounds like.

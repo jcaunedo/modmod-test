@@ -1,10 +1,6 @@
-# UCL (Unified Component Library)
+# ModAuto UCL (Unified Component Library)
 
-Shared React component library for a project's frontend applications. Built with React 19, Tailwind CSS 4 and TypeScript, on the base component library chosen in "Stack" (shadcn/ui by default).
-
-## ⚠️ Setup required
-
-This repo is the **unconfigured UCL template**. Before doing any other task, run the `ucl-setup` skill (`/ucl-setup`). It asks for the stack first (base component library, icons, forms), then the project details (name, package, registry, Figma file, apps, control sizes, work tracking), and updates dependencies, build config and docs to match, including SIZE-SCALE.md and CONVENTIONS.md. When setup finishes, it deletes this section.
+Shared React component library for ModAuto's frontend applications. Built with React 19, Tailwind CSS 4 and TypeScript, on shadcn/ui (Radix).
 
 ## Project
 
@@ -12,11 +8,14 @@ Everything specific to this project is in this section, "Stack", "Figma", DESIGN
 
 | Item         | Value                                                        |
 | ------------ | ------------------------------------------------------------ |
-| Project      | ⚠️ Not set (run `ucl-setup`)                                 |
-| Package      | `ucl` (placeholder, e.g. `@your-org/ucl`)                    |
-| Registry     | GitHub Packages (default)                                    |
-| Apps         | ⚠️ Not defined. List the apps that consume UCL (used for `src/layouts/<app>/`) |
+| Project      | ModAuto                                                      |
+| Package      | `@jcaunedo/ucl`                                              |
+| Registry     | GitHub Packages, `jcaunedo` account                          |
+| Repository   | `https://github.com/jcaunedo/modmod-test`                    |
+| Apps         | `modauto` (`src/layouts/modauto/`)                           |
 | Brand        | DESIGN.md → "Brand names", "Brand voice"                     |
+
+ℹ️ The package scope (`@jcaunedo`) is the account that owns the repo. `.github/workflows/publish.yml` publishes with the repo's own `GITHUB_TOKEN`, which can only publish to that account. If the repo moves to another account or org, change the scope everywhere it appears (`package.json`, `.npmrc`, this file, the README and `src/docs/`): that's a breaking change for the apps.
 
 ## How the rules work
 
@@ -26,7 +25,7 @@ Everything specific to this project is in this section, "Stack", "Figma", DESIGN
 - **[ARCHITECTURE.md](ARCHITECTURE.md)**: how each app's layouts are wired, one section per app. Covers which file does what, how the pieces connect and which files are sample data to replace.
 - **[SIZE-SCALE.md](SIZE-SCALE.md)**: the one height scale every control shares. Covers each step's height and role, the default, and which sizes each control supports. Read it before building or resizing a button, input, select or any control with a `size` prop.
 - **[CONVENTIONS.md](CONVENTIONS.md)**: how work is branched, committed, versioned, tagged and traced, and how PRDs are written (status labels, creation header, ID prefixes).
-- **Skills** in `.claude/skills/` (`ucl-setup`, `ucl-ds-sync`, `ucl-generate-component`, `ucl-generate-layout`, `project-copywriter`) are project-agnostic. They read CLAUDE.md and DESIGN.md before they start (plus MOTION.md when the work involves animation) and take every project value (package, Figma file, categories, apps, component APIs, voice) from them. **When a skill and these files disagree, these files win.**
+- **Skills** in `.claude/skills/` (`ucl-setup`, `ucl-ds-sync`, `ucl-generate-component`, `ucl-generate-layout`, `modauto-copywriter`) are project-agnostic. They read CLAUDE.md and DESIGN.md before they start (plus MOTION.md when the work involves animation) and take every project value (package, Figma file, categories, apps, component APIs, voice) from them. **When a skill and these files disagree, these files win.**
 - **Not defined here?** Ask, then record the answer in the right file so the next run doesn't have to ask again.
 
 ## Quick Reference
@@ -43,17 +42,17 @@ Everything specific to this project is in this section, "Stack", "Figma", DESIGN
 
 ## Stack
 
-The stack is set per project so UCL matches what the project's dev team ships. It's the first thing `ucl-setup` asks for. The values below are the template defaults. Change a row only after agreeing it with the dev team, then update every section below that depends on it.
+The stack was chosen at setup so UCL matches what ModAuto's dev team ships. Change a row only after agreeing it with the dev team, then rerun `ucl-setup` for that row, or update every section below that depends on it.
 
 | Concern              | Choice                                                     | Status                     |
 | -------------------- | ---------------------------------------------------------- | -------------------------- |
 | Framework            | React 19 (`react`, `react-dom` as peer dependencies)       | Set                        |
-| Base components      | shadcn/ui on Radix (`@radix-ui/react-*`)                   | Default                    |
+| Base components      | shadcn/ui on Radix (`@radix-ui/react-*`)                   | Set                        |
 | Styling              | Tailwind CSS 4, tokens in `src/styles/theme.css` (oklch)   | Set                        |
 | Variants             | `class-variance-authority` (`cva`) + `cn()`                | Set                        |
-| Icons                | `lucide-react`                                             | Default                    |
+| Icons                | `lucide-react`                                             | Set                        |
 | Motion               | `motion` (`motion/react`)                                  | Set                        |
-| Forms                | `react-hook-form` + `zod`, optional peer dependencies      | Default                    |
+| Forms                | `react-hook-form` + `zod`, optional peer dependencies      | Set                        |
 | App rendering        | Bundle marked `"use client"` after build (works for client-only and Next.js apps) | Set |
 | Build                | tsup, ESM only                                             | Set                        |
 | Workbench            | Storybook 10 (`@storybook/react-vite`, `addon-docs`)       | Set                        |
@@ -65,14 +64,14 @@ The stack is set per project so UCL matches what the project's dev team ships. I
 
 | Item                    | Value                                     |
 | ----------------------- | ----------------------------------------- |
-| Design system file      | ⚠️ Not set. Add the name and `fileKey`    |
+| Design system file      | ⚠️ Not set. The file hasn't been created yet. Add its name and `fileKey` when it exists |
 | Modes                   | ⚠️ Not set. Light only, or light + dark?  |
 
 Skills compare every Figma URL's `fileKey` against this table. Until it's set, they ask for the file before syncing tokens.
 
 ## Architecture
 
-- **Package:** the name in "Project", ESM-only (see "Release & Publishing").
+- **Package:** `@jcaunedo/ucl`, ESM-only (see "Release & Publishing").
 - **Build:** tsup bundles `src/index.ts` → `dist/index.js` + `dist/index.d.ts`. `src/styles/theme.css` is copied raw to `dist/styles.css`.
 - **Styling:** two CSS files.
   - `src/styles/theme.css`: design tokens, `@theme inline` mappings, breakpoints, `:root` and `.dark` variables. Ships to consumers as `<package>/styles`.
@@ -229,9 +228,9 @@ The motion rules live in [MOTION.md](MOTION.md): principles, personality, the na
 
 ## Release & Publishing
 
-- **Registry:** set in "Project" (GitHub Packages by default). `publishConfig.registry` in `package.json`, the scope line in `.npmrc` and `registry-url` in `.github/workflows/publish.yml` must match it.
+- **Registry:** set in "Project" (GitHub Packages). `publishConfig.registry` in `package.json`, the scope line in `.npmrc` and `registry-url` in `.github/workflows/publish.yml` must match it.
 - **Version bump:** `npm run release:patch|minor|major` wraps `npm version`. `preversion` runs `npm run lint`; `npm version` bumps `package.json`, commits and tags `vX.Y.Z`; `postversion` runs `npm run build`.
-- **Publish:** `.github/workflows/publish.yml` runs on pushes to `main` that touch `package.json`, compares the version with the previous commit, and publishes only when it changed. Normal merges release nothing. It never publishes while `package.json` has `"private": true` (the unconfigured template; `ucl-setup` removes it) or on a first commit with no previous version, so the first release always comes from `npm run release:*`.
+- **Publish:** `.github/workflows/publish.yml` runs on pushes to `main` that touch `package.json`, compares the version with the previous commit, and publishes only when it changed. Normal merges release nothing. It never publishes while `package.json` has `"private": true` (setup removed it) or on a first commit with no previous version, so the first release always comes from `npm run release:*`.
 - **Release flow:** commit your work (clean tree) → `npm run release:*` → `git push && git push --tags`.
 - **Semver:**
   - **Patch:** fixes and visual tweaks.
@@ -244,25 +243,25 @@ The motion rules live in [MOTION.md](MOTION.md): principles, personality, the na
 Apps need a `.npmrc` scoping the package to the registry, plus a read-only token:
 
 ```
-@your-org:registry=https://npm.pkg.github.com
+@jcaunedo:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${NPM_TOKEN}
 ```
 
 ```bash
-npm install @your-org/ucl
+npm install @jcaunedo/ucl
 ```
 
 ```css
 /* In the consuming app's global CSS */
 @import "tailwindcss";
-@import "@your-org/ucl/styles";
-@source "../node_modules/@your-org/ucl/dist";
+@import "@jcaunedo/ucl/styles";
+@source "../node_modules/@jcaunedo/ucl/dist";
 ```
 
 `@source` makes Tailwind scan UCL's bundled JS for class names. Without it, component styles silently go missing.
 
 ```tsx
-import { Button } from "@your-org/ucl";
+import { Button } from "@jcaunedo/ucl";
 ```
 
 ## Keeping PRDs Current
